@@ -41,7 +41,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void saveStaff(Staff staff, String role) {
-        staff.setStaffRole(new HashSet<>(Collections
+        staff.setRoles(new HashSet<>(Collections
                 .singletonList(roleRepository
                         .findByRole(role))));
         staffRepository.save(staff);

@@ -24,7 +24,7 @@ public class EntitiesTest {
                 .builder()
                 .firstName("Bozena")
                 .lastName("Dobrabula")
-                .staffRole(new HashSet<>(Collections
+                .roles(new HashSet<>(Collections
                         .singletonList(entityManager
                                 .find(Role.class, 1))))
                 .build();

@@ -17,7 +17,7 @@ import java.util.Set;
 public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "staff_id", nullable = false, unique = true)
+    @Column(name = "staff_id")
     private int staffId;
 
     @Column(name = "first_name", length = 20, nullable = false)
@@ -31,11 +31,18 @@ public class Staff implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> staffRole;
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
     private List<Orders> orders;
 
     @Column(name = "is_available")
+    @Builder.Default
     private boolean isAvailable = true;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 }
