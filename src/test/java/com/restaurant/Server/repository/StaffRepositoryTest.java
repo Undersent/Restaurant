@@ -38,7 +38,7 @@ public class StaffRepositoryTest {
                 .builder()
                 .firstName(firstName)
                 .lastName(lastName)
-                .userRole(new HashSet<>(Collections
+                .staffRole(new HashSet<>(Collections
                         .singletonList(entityManager
                                 .find(Role.class, 1))))
                 .build();

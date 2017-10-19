@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -17,12 +19,10 @@ public class Customer {
 
     @Id
     @Column(name="customer_id")
-    @GeneratedValue(generator = "gen")
-    @GenericGenerator(name="gen", strategy="foreign",
-            parameters = @Parameter(name="property", value ="order"))
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Orders order;
+    @OneToMany(mappedBy = "customer",
+            cascade=CascadeType.ALL)
+    private List<Orders> order;
 }

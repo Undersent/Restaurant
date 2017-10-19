@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -25,7 +26,16 @@ public class Staff implements Serializable {
     @Column(name = "last_name", length = 20, nullable = false)
     private String lastName;
 
+    @Column(name = "pesel")
+    private String pesel;
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> userRole;
+    @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> staffRole;
+
+    @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
+    private List<Orders> orders;
+
+    @Column(name = "is_available")
+    private boolean isAvailable = true;
 }

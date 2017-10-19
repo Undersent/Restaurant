@@ -14,21 +14,53 @@ import java.io.Serializable;
 @Entity
 @Table(name = "orders")
 public class Orders implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "orders_id", nullable = false, unique = true)
+    @Column(name = "orders")
     private int id;
 
-    @Column(name = "staff_id", length = 20, nullable = false)
-    private int staffId;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "staff")
+    private Staff staff;
 
-    @OneToOne(mappedBy = "order")
-    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "customer")
+    @ManyToOne(cascade=CascadeType.ALL)
     private Customer customer;
 
-    @Column(name = "customer_id", length = 20, nullable = false)
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
+
+    @Column(name = "date_of_order", length = 20)
     private String dateOfOrder;
 
     @Column(name = "other_details")
     private String otherDetails;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Orders orders = (Orders) o;
+
+        if (id != orders.id) return false;
+        if (staff != null ? !staff.equals(orders.staff) : orders.staff != null) return false;
+        if (customer != null ? !customer.equals(orders.customer) : orders.customer != null) return false;
+        if (meal != null ? !meal.equals(orders.meal) : orders.meal != null) return false;
+        if (dateOfOrder != null ? !dateOfOrder.equals(orders.dateOfOrder) : orders.dateOfOrder != null) return false;
+        return otherDetails != null ? otherDetails.equals(orders.otherDetails) : orders.otherDetails == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (staff != null ? staff.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + (meal != null ? meal.hashCode() : 0);
+        result = 31 * result + (dateOfOrder != null ? dateOfOrder.hashCode() : 0);
+        result = 31 * result + (otherDetails != null ? otherDetails.hashCode() : 0);
+        return result;
+    }
 }

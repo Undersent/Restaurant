@@ -1,6 +1,5 @@
 package com.restaurant.Server.model;
 
-import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,11 @@ public class EntitiesTest {
                 .builder()
                 .firstName("Bozena")
                 .lastName("Dobrabula")
-                .userRole(new HashSet<>(Collections
+                .staffRole(new HashSet<>(Collections
                         .singletonList(entityManager
                                 .find(Role.class, 1))))
                 .build();
         entityManager.merge(staff);
         entityManager.flush();
-        Session session = entityManager.getEntityManager().unwrap(Session.class);
     }
 }
