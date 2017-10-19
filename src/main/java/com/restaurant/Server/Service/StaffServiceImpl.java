@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+
 
 @Service
 @AllArgsConstructor(onConstructor = @_(@Autowired))
@@ -30,10 +30,20 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public Staff findStaffById(int id) {
+        return staffRepository.findByStaffId(id);
+    }
+
+    @Override
+    public Staff findStaffByPesel(String pesel) {
+        return staffRepository.findByPesel(pesel);
+    }
+
+    @Override
     public void saveStaff(Staff staff, String role) {
-//        staff.setUserRole(new HashSet<>(Collections
-//                .singletonList(roleRepository
-//                        .findByRole(role))));
+        staff.setRoles(new HashSet<>(Collections
+                .singletonList(roleRepository
+                        .findByRole(role))));
         staffRepository.save(staff);
     }
 }

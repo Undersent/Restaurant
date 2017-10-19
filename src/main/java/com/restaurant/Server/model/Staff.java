@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -16,7 +17,7 @@ import java.util.Set;
 public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "staff_id", nullable = false, unique = true)
+    @Column(name = "staff_id")
     private int staffId;
 
     @Column(name = "first_name", length = 20, nullable = false)
@@ -25,7 +26,23 @@ public class Staff implements Serializable {
     @Column(name = "last_name", length = 20, nullable = false)
     private String lastName;
 
+    @Column(name = "pesel")
+    private String pesel;
+
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> userRole;
+    @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
+    private List<Orders> orders;
+
+    @Column(name = "is_available")
+    @Builder.Default
+    private boolean isAvailable = true;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 }
