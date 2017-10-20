@@ -21,6 +21,7 @@ public class Meal {
     private String mealName;
 
     @Column(name = "is_available")
+    @Builder.Default
     private boolean isAvailable = true;
 
     @Column(name = "price")

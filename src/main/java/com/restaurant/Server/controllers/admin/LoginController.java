@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-//@AllArgsConstructor(onConstructor = @_(@Autowired))
+@AllArgsConstructor(onConstructor = @_(@Autowired))
 public class LoginController {
 
-    @Autowired
     StaffService staffService;
 
     @GetMapping(value = {"/login"})

@@ -5,9 +5,12 @@ import com.restaurant.Server.model.Meal;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+
 
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @Service
@@ -21,6 +24,12 @@ public class MealServiceImpl implements MealService {
     public Meal findByMealName(String name) {
         return mealRepository.findByMealName(name);
     }
+
+    @Override
+    public Page<Meal> findAll(Pageable pageable) {
+        return mealRepository.findAll(pageable);
+    }
+
 
     @Override
     @Transactional

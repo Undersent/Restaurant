@@ -74,4 +74,5 @@ public class MealRepositoryTest {
                         .filter(meal -> meal.getPrice() < 5)
                         .count());
     }
+
 }
