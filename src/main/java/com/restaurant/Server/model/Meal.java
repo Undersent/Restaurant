@@ -22,4 +22,7 @@ public class Meal {
 
     @Column(name = "is_available")
     private boolean isAvailable = true;
+
+    @Column(name = "price")
+    private double price;
 }

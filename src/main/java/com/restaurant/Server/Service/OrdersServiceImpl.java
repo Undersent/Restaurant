@@ -42,9 +42,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Transactional
     @Override
-    public Orders save(Orders order){
+    public void save(Orders order){
         order.setDateOfOrder(LocalDateTime.now().toString());
         ordersRepository.save(order);
-        return order;
     }
 }

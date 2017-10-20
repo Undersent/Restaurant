@@ -12,9 +12,13 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout</button>
+    <form th:action="@{/admin/add/meal}" method="get">
+        <button class="btn btn-md btn-danger btn-block"
+                type="Submit">add meal</button>
+    </form>
+    <form th:action="@{/admin/add/staff}" method="get">
+        <button class="btn btn-md btn-danger btn-block"
+                type="Submit">add staff</button>
     </form>
 
     <div class="panel-group" style="margin-top:40px">

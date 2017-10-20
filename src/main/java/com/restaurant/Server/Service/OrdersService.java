@@ -13,5 +13,5 @@ public interface OrdersService {
     List<Orders> findAllOrdersByStaff(Staff staff);
     List<Orders> findAllOrdersByCustomer(Customer customer);
     Orders findByCustomer(Customer customer);
-    Orders save(Orders order);
+    void save(Orders order);
 }

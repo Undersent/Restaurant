@@ -19,21 +19,15 @@ public class AdminController {
 
     StaffService staffService;
 
-    @PostMapping("/addMeal")
-    public void addMeal(){
-
+    @GetMapping("/home")
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Staff staff = staffService.findStaffByPesel(auth.getName());
+        modelAndView.addObject("firstName", "Welcome "
+                + staff.getLastName());
+        modelAndView.addObject("adminMessage","Content Available for Admin");
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
     }
-
-//    @GetMapping("/home")
-//    public ModelAndView home(){
-//        ModelAndView modelAndView = new ModelAndView();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Staff staff = staffService.findStaffByPesel(auth.getName());
-//        modelAndView.addObject("firstName", "Welcome "
-//                + staff.getFirstName()
-//                + " " + staff.getLastName());
-//        modelAndView.addObject("adminMessage","Content Available for Admin");
-//        modelAndView.setViewName("admin/home");
-//        return modelAndView;
-//    }
 }
