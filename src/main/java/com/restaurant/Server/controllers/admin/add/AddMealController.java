@@ -30,7 +30,7 @@ public class AddMealController {
         mealService.saveMeal(
                 Meal.builder()
                         .mealName(mealName)
-                        .isAvailable(isTrue(requestParams))
+                        .available(isTrue(requestParams))
                         .price(getValueOf(requestParams))
                         .build()
         );

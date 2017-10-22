@@ -31,13 +31,13 @@ public class MealRepositoryTest {
 
     private Meal meal1 = Meal
             .builder()
-            .isAvailable(true)
+            .available(true)
             .mealName("fryteczki")
             .price(4)
             .build();
     private Meal meal2 = Meal
             .builder()
-            .isAvailable(true)
+            .available(true)
             .mealName("kawunia")
             .price(5.50)
             .build();

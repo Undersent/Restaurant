@@ -10,16 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-@RequestMapping("admin/add/staff/{pesel}")
+@RequestMapping("admin/add/staff")
 public class AddStaffController {
 
     StaffService staffService;
 
     @PostMapping
-    public ResponseEntity<?> addStaff(@PathVariable("pesel") String pesel,
-                                   @RequestBody(required = false) Staff staff){
-        validateStaff(pesel);
-        staff.setPesel(pesel);
+    public ResponseEntity<?> addStaff(@RequestBody Staff staff){
+        validateStaff(staff.getPesel());
         staffService.saveStaff(staff, "ROLE_STAFF");
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }

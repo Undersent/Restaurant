@@ -2,6 +2,9 @@ package com.restaurant.Server.Service;
 
 import com.restaurant.Server.model.Customer;
 
+import java.util.Optional;
+
 public interface CustomerService {
-    Customer save(Customer customer);
+    Optional<Customer> findById(int id);
+    void save(int id);
 }

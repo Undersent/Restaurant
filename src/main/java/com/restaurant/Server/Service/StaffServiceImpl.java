@@ -6,6 +6,8 @@ import com.restaurant.Server.model.Staff;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -41,6 +43,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public Page<Staff> findAll(Pageable pageable) {
+        return staffRepository.findAll(pageable);
+    }
+
+    @Override
     public void saveStaff(Staff staff, String role) {
         staff.setRoles(new HashSet<>(Collections
                 .singletonList(roleRepository
@@ -49,7 +56,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void UpdateStaffById(int id, String name, double price, boolean isAvailable) {
-
+    public void UpdateStaffById(Staff staff) {
+        staffRepository.save(staff);
     }
 }

@@ -12,17 +12,16 @@ import javax.persistence.EntityNotFoundException;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-@RequestMapping("admin/update/meal/{id}")
+@RequestMapping("admin/update/meal")
 public class UpdateMealController {
 
     MealService mealService;
-    //http://localhost:8080/admin/update/meal/1 , a potem wyslac jsona {"mealName":"fryteczki","isAvailable":0,"price":6.66}
+    //http://localhost:8080/admin/update/meal/1 , i wyslac jsona {"mealName":"fryteczki","available":0,"price":6.66}
     @PutMapping
-    public ResponseEntity<?> updateMeal(@PathVariable("id") int id,
-                                     @RequestBody(required = false) Meal meal){
-        validateMeal(id);
-        meal.setMealId(id);
+    public ResponseEntity<?> updateMeal(@RequestBody Meal meal){
+        validateMeal(meal.getMealId());
         this.mealService.UpdateMealById(meal);
+
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
