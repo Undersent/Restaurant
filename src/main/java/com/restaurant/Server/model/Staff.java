@@ -1,5 +1,6 @@
 package com.restaurant.Server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,11 +27,13 @@ public class Staff implements Serializable {
     @Column(name = "last_name", length = 20, nullable = false)
     private String lastName;
 
+    @JsonIgnore
     @Column(name = "pesel")
     private String pesel;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
@@ -40,9 +43,11 @@ public class Staff implements Serializable {
     @Builder.Default
     private boolean isAvailable = true;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
+    @JsonIgnore
     @Column(name = "enabled")
     private boolean enabled;
 }

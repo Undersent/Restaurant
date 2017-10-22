@@ -4,11 +4,15 @@ import com.restaurant.Server.model.Orders;
 import com.restaurant.Server.model.Staff;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StaffService {
-    Staff findStaffByFirstName(String firstName);
-    Staff findStaffByLastName(String lastName);
-    Staff findStaffById(int id);
-    Staff findStaffByPesel(String pesel);
+    Optional<Staff> findStaffByFirstName(String firstName);
+    Optional<Staff> findStaffByLastName(String lastName);
+    Optional<Staff> findStaffById(int id);
+    Optional<Staff> findStaffByPesel(String pesel);
+
     void saveStaff(Staff staff, String role);
+    void UpdateStaffById(int id, String name, double price, boolean isAvailable);
+
 }

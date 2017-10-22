@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
 @Controller
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @RequestMapping("/admin")
@@ -23,9 +25,9 @@ public class AdminController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Staff staff = staffService.findStaffByPesel(auth.getName());
+        Optional<Staff> staff = staffService.findStaffByPesel(auth.getName());
         modelAndView.addObject("firstName", "Welcome "
-                + staff.getLastName());
+                + staff.get().getLastName());
         modelAndView.addObject("adminMessage","Content Available for Admin");
         modelAndView.setViewName("admin/home");
         return modelAndView;

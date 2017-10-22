@@ -5,12 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
 public interface MealRepository extends JpaRepository<Meal, Integer> {
-    Meal findByMealName(String name);
-    Meal findByPrice(double price);
+    Optional<Meal> findByMealName(String name);
+    Optional<Meal> findByPrice(double price);
+    Optional<Meal> findByMealId(int id);
     Page<Meal> findAll(Pageable pageable);
-    List<Meal> findMealsByPriceBetween(double lowerLimit, double higherLimit);
-    List<Meal> findMealsByPriceBefore(double limit);
+    Collection<Meal> findMealsByPriceBetween(double lowerLimit, double higherLimit);
+    Collection<Meal> findMealsByPriceBefore(double limit);
+
 }

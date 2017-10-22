@@ -75,4 +75,13 @@ public class MealRepositoryTest {
                         .count());
     }
 
+    @Test
+    public void getMealsWithId(){
+        entityManager.persist(meal1);
+        entityManager.persist(meal2);
+        entityManager.flush();
+
+        assertEquals(1, mealRepository.findByMealId(1).get().getMealId());
+    }
+
 }
