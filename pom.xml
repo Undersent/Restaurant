@@ -6,7 +6,7 @@
 	<groupId>com.restaurant</groupId>
 	<artifactId>Server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!--<packaging>war</packaging>-->
 
 	<name>Server</name>
 	<description>project for Restaurant</description>
@@ -113,9 +113,9 @@
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<processTypes>
-						<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
-					</processTypes>
+					<!--<processTypes>-->
+						<!--<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>-->
+					<!--</processTypes>-->
 				</configuration>
 			</plugin>
 			<plugin>
