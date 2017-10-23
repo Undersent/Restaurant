@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 
 
 @Service
@@ -20,22 +21,22 @@ public class StaffServiceImpl implements StaffService {
     private RoleRepository roleRepository;
 
     @Override
-    public Staff findStaffByFirstName(String firstName) {
+    public Optional<Staff> findStaffByFirstName(String firstName) {
         return staffRepository.findByFirstName(firstName);
     }
 
     @Override
-    public Staff findStaffByLastName(String lastName) {
+    public Optional<Staff> findStaffByLastName(String lastName) {
         return staffRepository.findByLastName(lastName);
     }
 
     @Override
-    public Staff findStaffById(int id) {
+    public Optional<Staff> findStaffById(int id) {
         return staffRepository.findByStaffId(id);
     }
 
     @Override
-    public Staff findStaffByPesel(String pesel) {
+    public Optional<Staff> findStaffByPesel(String pesel) {
         return staffRepository.findByPesel(pesel);
     }
 
@@ -45,5 +46,10 @@ public class StaffServiceImpl implements StaffService {
                 .singletonList(roleRepository
                         .findByRole(role))));
         staffRepository.save(staff);
+    }
+
+    @Override
+    public void UpdateStaffById(int id, String name, double price, boolean isAvailable) {
+
     }
 }

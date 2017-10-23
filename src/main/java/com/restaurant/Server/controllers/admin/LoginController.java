@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-//@AllArgsConstructor(onConstructor = @_(@Autowired))
+@AllArgsConstructor(onConstructor = @_(@Autowired))
 public class LoginController {
 
-    @Autowired
     StaffService staffService;
 
     @GetMapping(value = {"/login"})
@@ -24,17 +23,4 @@ public class LoginController {
         return modelAndView;
     }
 
-    @GetMapping("admin/home")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String a = auth.getName();
-        Staff staff = staffService.findStaffByPesel(auth.getName());
-        modelAndView.addObject("firstName", "Welcome "
-                + staff.getFirstName()
-                + " " + staff.getLastName());
-        modelAndView.addObject("adminMessage","Content Available for Admin");
-        modelAndView.setViewName("admin/home");
-        return modelAndView;
-    }
 }

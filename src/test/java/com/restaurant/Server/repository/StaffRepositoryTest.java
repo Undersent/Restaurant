@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -50,10 +51,10 @@ public class StaffRepositoryTest {
         entityManager.merge(staff);
         entityManager.flush();
 
-        Staff staffFound = staffRepository.findByFirstName(firstName);
+        Optional<Staff> staffFound = staffRepository.findByFirstName(firstName);
 
         assertNotNull(staffFound);
-        assertThat(staffFound.getFirstName())
+        assertThat(staffFound.get().getFirstName())
                 .isEqualToIgnoringCase(staff.getFirstName());
     }
 }

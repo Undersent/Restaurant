@@ -3,6 +3,8 @@ package com.restaurant.Server.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -11,15 +13,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "meal")
-public class Meal {
+public class Meal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "meal_id")
-    private int meal_id;
+    private int mealId;
 
     @Column(name = "meal_name")
     private String mealName;
 
     @Column(name = "is_available")
+    @Builder.Default
     private boolean isAvailable = true;
+
+    @Column(name = "price")
+    private double price;
+
 }

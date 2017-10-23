@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add meal</title>
+
+</head>
+<body>
+<form th:action="@{/admin/home}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Go to Admin page</button>
+</form>
+
+<div class="container">
+    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+    <form th:action="@{/admin/add/meal}" method="POST" class="form-signin">
+
+        <input type="text" id="meal_name" name="meal_name"  th:placeholder="Name"
+               class="form-control" /> <br/>
+        <input type="number"  th:placeholder="Availability"
+               id="is_available" name="is_available" class="form-control" /> <br />
+        <input type="text"  th:placeholder="price"
+               id="price" name="price" class="form-control" /> <br />
+
+
+
+        <div align="center" th:if="${param.error}">
+            <p style="font-size: 20; color: #FF1C19;"><pesel></pesel>Bad params of meal</p>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success"
+             role="alert" th:text=${successMessage}></div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger"
+             role="alert" th:text=${errorMessage}></div>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Add" type="Submit" th:text="Add"></button>
+    </form>
+    <table align="center">
+    </table>
+</div>
+</body>
+</html>

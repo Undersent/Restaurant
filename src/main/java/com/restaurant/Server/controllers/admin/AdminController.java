@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
 @Controller
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @RequestMapping("/admin")
@@ -19,21 +21,15 @@ public class AdminController {
 
     StaffService staffService;
 
-    @PostMapping("/addMeal")
-    public void addMeal(){
-
+    @GetMapping("/home")
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Staff> staff = staffService.findStaffByPesel(auth.getName());
+        modelAndView.addObject("firstName", "Welcome "
+                + staff.get().getLastName());
+        modelAndView.addObject("adminMessage","Content Available for Admin");
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
     }
-
-//    @GetMapping("/home")
-//    public ModelAndView home(){
-//        ModelAndView modelAndView = new ModelAndView();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Staff staff = staffService.findStaffByPesel(auth.getName());
-//        modelAndView.addObject("firstName", "Welcome "
-//                + staff.getFirstName()
-//                + " " + staff.getLastName());
-//        modelAndView.addObject("adminMessage","Content Available for Admin");
-//        modelAndView.setViewName("admin/home");
-//        return modelAndView;
-//    }
 }
