@@ -17,7 +17,7 @@ public class Orders implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "orders")
+    @Column(name = "orders_id")
     private int id;
 
     @ManyToOne(cascade=CascadeType.ALL)
@@ -32,7 +32,7 @@ public class Orders implements Serializable {
     @JoinColumn(name = "meal_id")
     private Meal meal;
 
-    @Column(name = "date_of_order", length = 20)
+    @Column(name = "date_of_order")
     private String dateOfOrder;
 
     @Column(name = "other_details")

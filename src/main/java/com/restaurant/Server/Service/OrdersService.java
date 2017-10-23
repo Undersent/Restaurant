@@ -6,12 +6,14 @@ import com.restaurant.Server.model.Staff;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface OrdersService {
-    List<Orders> findAllOrdersByStaff(Staff staff);
-    List<Orders> findAllOrdersByCustomer(Customer customer);
-    Orders findByCustomer(Customer customer);
+    Collection<Orders> findAllOrdersByStaff(Staff staff);
+    Collection<Orders> findAllOrdersByCustomer(Customer customer);
+    Optional<Orders> findByCustomer(Customer customer);
     void save(Orders order);
 }

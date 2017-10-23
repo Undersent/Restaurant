@@ -24,7 +24,7 @@ public class Meal implements Serializable {
 
     @Column(name = "is_available")
     @Builder.Default
-    private boolean isAvailable = true;
+    private boolean available = true;
 
     @Column(name = "price")
     private double price;

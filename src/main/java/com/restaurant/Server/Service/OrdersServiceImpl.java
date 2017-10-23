@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @Service
 @NoArgsConstructor
@@ -21,22 +24,22 @@ public class OrdersServiceImpl implements OrdersService {
     private OrdersRepository ordersRepository;
 
     @Override
-    public List<Orders> findAllOrdersByStaff(Staff staff) {
+    public Collection<Orders> findAllOrdersByStaff(Staff staff) {
         return ordersRepository.findAllByStaff(staff);
     }
 
     @Autowired
-    public List<Orders> findAll() {
+    public Collection<Orders> findAll() {
         return ordersRepository.findAll();
     }
 
     @Override
-    public List<Orders> findAllOrdersByCustomer(Customer customer) {
+    public Collection<Orders> findAllOrdersByCustomer(Customer customer) {
         return ordersRepository.findAllByCustomer(customer);
     }
 
     @Override
-    public Orders findByCustomer(Customer customer) {
+    public Optional<Orders> findByCustomer(Customer customer) {
         return ordersRepository.findByCustomer(customer);
     }
 

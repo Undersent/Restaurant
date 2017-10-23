@@ -27,7 +27,7 @@ public class Staff implements Serializable {
     @Column(name = "last_name", length = 20, nullable = false)
     private String lastName;
 
-    @JsonIgnore
+    //@JsonIgnore
     @Column(name = "pesel")
     private String pesel;
 
