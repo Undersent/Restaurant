@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +16,12 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
+@RequestMapping("get/staff")
 public class GetStaffController {
 
     StaffService staffService;
 
-    @GetMapping
+    @GetMapping(value={"/lastName"})
     public Optional<Staff> getStaffByName(@RequestParam("lastName") String lastName){
         return this.staffService.findStaffByLastName(lastName);
     }

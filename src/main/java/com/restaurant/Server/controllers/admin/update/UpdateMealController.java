@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 public class UpdateMealController {
 
     MealService mealService;
-    //http://localhost:8080/admin/update/meal/1 , i wyslac jsona {"mealName":"fryteczki","available":0,"price":6.66}
+    //http://localhost:8080/admin/update/meal , i wyslac jsona {"mealName":"fryteczki","available":0,"price":6.66}
     @PutMapping
     public ResponseEntity<?> updateMeal(@RequestBody Meal meal){
         validateMeal(meal.getMealId());

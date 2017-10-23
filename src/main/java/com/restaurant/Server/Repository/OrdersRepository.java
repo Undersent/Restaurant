@@ -7,11 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
-    List<Orders> findAllByStaff(Staff staff);
-    List<Orders> findAllByCustomer(Customer customer);
-    Orders findByCustomer(Customer customer);
+    Collection<Orders> findAllByStaff(Staff staff);
+    Collection<Orders> findAllByCustomer(Customer customer);
+    Optional<Orders> findByCustomer(Customer customer);
 }
