@@ -17,23 +17,17 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-@RequestMapping("admin/add/meal/{mealName}")
+@RequestMapping("admin/add/meal")
 public class AddMealController {
 
     MealService mealService;
 
-    @PostMapping//http://localhost:8080/admin/add/meal/pizza2?price=10&isAvailable=1
-    public ResponseEntity<?> postMeal(@PathVariable("mealName") String mealName,
-                               @RequestParam Map requestParams){
-        this.validateMealName(mealName);
+    @PostMapping
+    public ResponseEntity<?> addMeal(@RequestBody Meal meal){
+        this.validateMealName(meal.getMealName());
 
-        mealService.saveMeal(
-                Meal.builder()
-                        .mealName(mealName)
-                        .available(isTrue(requestParams))
-                        .price(getValueOf(requestParams))
-                        .build()
-        );
+        mealService.saveMeal(meal);
+
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
@@ -44,14 +38,5 @@ public class AddMealController {
                 .ifPresent(m -> {
                    new Exception("meal with that name exists");
                 });
-    }
-
-
-    private double getValueOf(Map requestParams) {
-        return Double.parseDouble(String.valueOf( requestParams.get("price")));
-    }
-
-    private boolean isTrue(Map requestParams) {
-        return Double.parseDouble(String.valueOf(requestParams.get("isAvailable"))) == 1;
     }
 }
