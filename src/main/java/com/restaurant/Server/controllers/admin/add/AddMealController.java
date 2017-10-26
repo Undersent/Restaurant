@@ -36,7 +36,7 @@ public class AddMealController {
                 .findByMealName(mealName)
                 .filter(mealName::equals)
                 .ifPresent(m -> {
-                   new Exception("meal with that name exists");
+                   throw new RuntimeException("meal with that name exists");
                 });
     }
 }

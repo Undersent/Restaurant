@@ -53,7 +53,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void saveMeal(Meal meal) {
         mealRepository.save(meal);
     }

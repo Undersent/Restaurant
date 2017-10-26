@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
-    Collection<Orders> findAllByStaff(Staff staff);
+    //Collection<Orders> findAllByStaff(Staff staff);
     Collection<Orders> findAllByCustomer(Customer customer);
     Optional<Orders> findByCustomer(Customer customer);
+    //Collection<Orders> findAllByCustomerId(int id);
 }

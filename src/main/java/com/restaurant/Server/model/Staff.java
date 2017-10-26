@@ -21,10 +21,10 @@ public class Staff implements Serializable {
     @Column(name = "staff_id")
     private int staffId;
 
-    @Column(name = "first_name", length = 20, nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", length = 20, nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
     //@JsonIgnore
@@ -36,8 +36,8 @@ public class Staff implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
-    private List<Orders> orders;
+//    @OneToMany(mappedBy = "staff", cascade=CascadeType.ALL)
+//    private List<Orders> orders;
 
     @Column(name = "is_available")
     @Builder.Default

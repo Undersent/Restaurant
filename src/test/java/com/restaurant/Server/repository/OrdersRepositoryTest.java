@@ -43,6 +43,21 @@ public class OrdersRepositoryTest {
     private String firstName = "Bozena";
     private String lastName = "Pasztecik";
 
+    Customer customer = createCustomer(1);
+    Orders order = Orders
+            .builder()
+            .id(1)
+            .dateOfOrder("10.10.10")
+            .staffId(customer.getCustomerId())
+            .build();
+    Orders order2 = Orders
+            .builder()
+            .id(2)
+            .dateOfOrder("06.06.06")
+            .staffId(customer.getCustomerId())
+            .build();
+
+
     @Before
     public void setUp(){
         logger.addAppender(appender);
@@ -97,7 +112,6 @@ public class OrdersRepositoryTest {
     @Test
     public void findOrderByCustomerTest(){
 
-        Customer customer = createCustomer(1);
         Orders order = createOrders(1);
         order.setCustomer(customer);
         customer
@@ -116,23 +130,15 @@ public class OrdersRepositoryTest {
     @Test
     public void findAllOrdersByCustomerTest(){
         Customer customer = createCustomer(1);
-        Orders order = Orders
-                .builder()
-                .id(0)
-                .dateOfOrder("10.10.10")
-                .build();
-        Orders order2 = Orders
-                .builder()
-                .id(1)
-                .dateOfOrder("06.06.06")
-                .build();
-        customer
-                .setOrder(Stream.of(order, order2)
-                        .collect(Collectors.toCollection(ArrayList::new)));
-        order.setCustomer(customer);
-        order2.setCustomer(customer);//relacja dwukierunkowa
 
-        entityManager.merge(customer);
+//        customer
+//                .setOrder(Stream.of(order, order2)
+//                        .collect(Collectors.toCollection(ArrayList::new)));
+        //order.setCustomer(customer);
+        //order2.setCustomer(customer);//relacja dwukierunkowa
+
+        entityManager.merge(order);
+        entityManager.merge(order2);
         entityManager.flush();
 
         Collection<Orders> orders = ordersRepository.findAllByCustomer(customer);
@@ -141,12 +147,15 @@ public class OrdersRepositoryTest {
         orders.stream()
                 .filter(o -> o.getId() == 2)
                 .forEach(h -> assertEquals(h.getId(), 2));
-        //assertEquals(orders..get(0).getId(), 2);
-        //assertEquals(orders.get(1).getId(), 3);
     }
 
-    @Test
-    public void findAllOrdersByStaffTest(){
-
-    }
+//    @Test
+//    public void findOrderByCustomerId(){
+//        entityManager.merge(order);
+//        entityManager.merge(order2);
+//        entityManager.flush();
+//        Collection<Orders> orders = ordersRepository.findByCustomerId(1);
+//        assertEquals(orders.size(), 2);
+//
+//    }
 }
