@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,9 +33,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles("test")
 @SpringBootTest
 @WebAppConfiguration
-public class UpdateMealController {
+public class MealControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -41,18 +44,20 @@ public class UpdateMealController {
 
     private MockMvc mockMvc;
     private String mealName = "kurczak";
-    private Meal meal;
+    private Meal meal = Meal.builder()
+            .mealName(mealName)
+            .build();
+
     private List<Meal> mealList = new ArrayList<>();
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
     @Autowired
     private MealRepository mealRepository;
-    @Autowired
-    private MealService mealService;
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
+        this.mappingJackson2HttpMessageConverter = Arrays.stream(converters)
                 .filter(hmc ->hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()
                 .orElse(null);
@@ -63,33 +68,39 @@ public class UpdateMealController {
 
     @Before
     public void setUp() throws Exception {
+       // Meal meal =
+        this.mealRepository.deleteAllInBatch();
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
-        this.mealList.add(new Meal(19,"kurczak2",true,11));
 
-        //this.mealRepository.deleteAllInBatch();
-//        this.meal = mealRepository.save(Meal.builder()
-//                .mealName(mealName)
-//                .mealId(1)
-//                .isAvailable(true)
-//                .build());
+        this.mealList.add(meal);
+        this.mealRepository.save(meal);
     }
 
     @Test
     public void mealNotFoundTest() throws Exception{
-        mockMvc.perform(put("/admin/update/meal/19")
-                .content(this.json(new Meal()))
+        mockMvc.perform(put("http://localhost:8080//admin/update/meal")
+                .content(this.json(Meal.builder().mealId(666).build()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void updateMealTest() throws Exception{
-        String mealJson = this.json(new Meal(19,"kurczak2",true,11));
-       // System.out.println(this.json(new Meal(19,"kurczak2",true,11)));
-        mockMvc.perform(put("/admin/update/meal/19")
+        String mealJson = "{ \"mealId\": 1, \"mealName\":\"kurczak2\", \"available\": true, \"price\": 0 }";//this.json(meal);
+        //System.out.println(mealJson);
+        mockMvc.perform(put("http://localhost:8080/admin/update/meal")
                 .contentType(contentType)
                 .content(mealJson))
                 .andExpect(status().isNotFound()); //....poprawic....TODO
+    }
+
+    @Test
+    public void getMeal() throws Exception {
+        mockMvc.perform(get("http://localhost:8080/get/meal/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.mealId", is(this.mealList.get(0).getMealId())))
+                .andExpect(jsonPath("$.price", is(this.mealList.get(0).getPrice())));
     }
 
     protected String json(Object o) throws IOException {
@@ -99,27 +110,3 @@ public class UpdateMealController {
         return mockHttpOutputMessage.getBodyAsString();
     }
 }
-//    @Test
-//    public void readSingleBookmark() throws Exception {
-//        mockMvc.perform(get("/" + userName + "/bookmarks/"
-//                + this.bookmarkList.get(0).getId()))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(contentType))
-//                .andExpect(jsonPath("$.id", is(this.bookmarkList.get(0).getId().intValue())))
-//                .andExpect(jsonPath("$.uri", is("http://bookmark.com/1/" + userName)))
-//                .andExpect(jsonPath("$.description", is("A description")));
-//    }
-//
-//    @Test
-//    public void readBookmarks() throws Exception {
-//        mockMvc.perform(get("/" + userName + "/bookmarks"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(contentType))
-//                .andExpect(jsonPath("$", hasSize(2)))
-//                .andExpect(jsonPath("$[0].id", is(this.bookmarkList.get(0).getId().intValue())))
-//                .andExpect(jsonPath("$[0].uri", is("http://bookmark.com/1/" + userName)))
-//                .andExpect(jsonPath("$[0].description", is("A description")))
-//                .andExpect(jsonPath("$[1].id", is(this.bookmarkList.get(1).getId().intValue())))
-//                .andExpect(jsonPath("$[1].uri", is("http://bookmark.com/2/" + userName)))
-//                .andExpect(jsonPath("$[1].description", is("A description")));
-//    }

@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-@RequestMapping("add/customer/{id}")
+@RequestMapping("add/customer")
 public class AddCustomerController {
 
     CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<?> addCustomer(@PathVariable("id") int id){
-        customerService.save(id);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    public ResponseEntity<?> addCustomer(){
+        return new ResponseEntity<>(customerService.save()
+                .getCustomerId(),HttpStatus.ACCEPTED);
     }
 
 }

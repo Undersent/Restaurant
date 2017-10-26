@@ -36,12 +36,12 @@ public class AddStaffCookController {
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
-    private void validateStaff(String pesel) { //POPRAWIC wszedzie TODO!
+    private void validateStaff(String pesel) {
         this.staffService
                 .findStaffByPesel(pesel)
-                .filter(pesel::equals)
+                .filter(staff -> staff.getPesel().equals(pesel))
                 .ifPresent(s -> {
-                    new Exception("staff with that pesel exists");
+                    throw new RuntimeException("staff with that pesel exists");
                 });
     }
 }

@@ -30,14 +30,12 @@ public class AssignerOfOrders implements Assigner{
 
     private void AddOrdersToStaff(Counter c, Orders order) {
         order.setStaffId(c.getStaff().getStaffId());
-        saveCounterToRepository(c.getStaff(), c); //poprawic, najpierw dostac countera  po id staffa a potem zapisywac
+        saveUpdatedCounterToRepository(c.getStaff(), c); //poprawic, najpierw dostac countera  po id staffa a potem zapisywac
     }
 
-    private void saveCounterToRepository(Staff staff, Counter c) {
-        counterRepository.save(Counter
-                .builder()
-                .staff(staff)
-                .count(c.getCount()+1)
-                .build());
+    private void saveUpdatedCounterToRepository(Staff staff, Counter c) {
+        c.setCount(c.getCount()+1);
+        c.setStaff(staff);
+        counterRepository.save(c);
     }
 }

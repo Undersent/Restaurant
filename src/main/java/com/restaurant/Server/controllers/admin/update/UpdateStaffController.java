@@ -27,5 +27,9 @@ public class UpdateStaffController {
     }
 
     private void validateStaff(String pesel) {
+        staffService.findStaffByPesel(pesel)
+                .orElseThrow(
+                    () ->  new RuntimeException()
+        );
     }
 }

@@ -82,6 +82,11 @@ public class MealRepositoryTest {
         entityManager.flush();
 
         assertEquals(1, mealRepository.findByMealId(1).get().getMealId());
+
+        meal1.setMealName("aaa");
+        entityManager.persist(meal1);
+        entityManager.flush();
+        assertEquals("aaa", mealRepository.findByMealId(1).get().getMealName());
     }
 
 }

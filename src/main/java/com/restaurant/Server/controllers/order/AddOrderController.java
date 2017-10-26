@@ -4,6 +4,8 @@ import com.restaurant.Server.Logic.Assigner;
 import com.restaurant.Server.Service.CustomerService;
 import com.restaurant.Server.Service.MealService;
 import com.restaurant.Server.Service.OrdersService;
+import com.restaurant.Server.exceptions.CustomerNotFoundException;
+import com.restaurant.Server.exceptions.MealNotFoundException;
 import com.restaurant.Server.model.Customer;
 import com.restaurant.Server.model.Meal;
 import com.restaurant.Server.model.Orders;
@@ -32,37 +34,34 @@ public class AddOrderController {
                                                  @PathVariable("mealId") int mealId,
                                                  @RequestBody(required = false) String description){
 
-        Customer customer = isCustomerEmpty(customerService
-                .findById(customerId).get());
-
-        Meal meal = isMealEmpty(mealService
-                .findByMealId(mealId).get());
-
+        validateCustomer(customerId);
+        validateMeal( mealId);
         Orders order = Orders.builder()
-                .customer(customer)
-                .meal(meal)
+                .customer(customerService
+                        .findById(customerId).get())
+                .meal(this.mealService.findByMealId(mealId).get())
                 .otherDetails(description)
                 .build();
 
         ordersService.save(order);
 
-        assigner.assignOrder(customer, order);
+        assigner.assignOrder(customerService
+                .findById(customerId).get(), order);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);//TODO
     }
 
-    //  TODO
-    private Meal isMealEmpty(Meal m) {
-        return Optional.ofNullable(m)
-                .filter(meal -> meal != null )
-                .orElseThrow(IllegalArgumentException::new);
+    private void validateCustomer(int customerId) {
+        this.customerService.findById(customerId).orElseThrow(
+                () -> new CustomerNotFoundException(customerId)
+        );
     }
 
-    //  TODO
-    private Customer isCustomerEmpty(Customer c) {
-        return Optional.ofNullable(c)
-                .filter(cus -> cus != null )
-                .orElseThrow(IllegalArgumentException::new);
+    private void validateMeal(int mealId) {
+        this.mealService.findByMealId(mealId).orElseThrow(
+                () -> new MealNotFoundException(mealId)
+        );
     }
+
 
 }
