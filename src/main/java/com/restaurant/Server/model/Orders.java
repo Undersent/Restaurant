@@ -20,11 +20,12 @@ public class Orders implements Serializable {
     @Column(name = "orders_id")
     private int id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "staff")
-    private Staff staff;
+    //@ManyToOne(cascade=CascadeType.ALL)
+    //@JoinColumn(name = "staff_id")
+    @Column(name = "staff_id")
+    private int staffId;
 
-    @JoinColumn(name = "customer")
+    @JoinColumn(name = "customer_id")
     @ManyToOne(cascade=CascadeType.ALL)
     private Customer customer;
 
@@ -46,7 +47,6 @@ public class Orders implements Serializable {
         Orders orders = (Orders) o;
 
         if (id != orders.id) return false;
-        if (staff != null ? !staff.equals(orders.staff) : orders.staff != null) return false;
         if (customer != null ? !customer.equals(orders.customer) : orders.customer != null) return false;
         if (meal != null ? !meal.equals(orders.meal) : orders.meal != null) return false;
         if (dateOfOrder != null ? !dateOfOrder.equals(orders.dateOfOrder) : orders.dateOfOrder != null) return false;
@@ -56,7 +56,6 @@ public class Orders implements Serializable {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (staff != null ? staff.hashCode() : 0);
         result = 31 * result + (customer != null ? customer.hashCode() : 0);
         result = 31 * result + (meal != null ? meal.hashCode() : 0);
         result = 31 * result + (dateOfOrder != null ? dateOfOrder.hashCode() : 0);

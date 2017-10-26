@@ -23,11 +23,6 @@ public class OrdersServiceImpl implements OrdersService {
 
     private OrdersRepository ordersRepository;
 
-    @Override
-    public Collection<Orders> findAllOrdersByStaff(Staff staff) {
-        return ordersRepository.findAllByStaff(staff);
-    }
-
     @Autowired
     public Collection<Orders> findAll() {
         return ordersRepository.findAll();

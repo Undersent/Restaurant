@@ -12,7 +12,6 @@ import java.util.Optional;
 
 
 public interface OrdersService {
-    Collection<Orders> findAllOrdersByStaff(Staff staff);
     Collection<Orders> findAllOrdersByCustomer(Customer customer);
     Optional<Orders> findByCustomer(Customer customer);
     void save(Orders order);
