@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @DataJpaTest
+@ActiveProfiles("test")
 public class StaffRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;

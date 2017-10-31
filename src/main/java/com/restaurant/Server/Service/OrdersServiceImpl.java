@@ -33,10 +33,10 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.findAllByCustomer(customer);
     }
 
-    @Override
-    public Optional<Orders> findByCustomer(Customer customer) {
-        return ordersRepository.findByCustomer(customer);
-    }
+//    @Override
+//    public Optional<Orders> findByCustomer(Customer customer) {
+//        return ordersRepository.findByCustomer(customer);
+//    }
 
     @Transactional
     @Override

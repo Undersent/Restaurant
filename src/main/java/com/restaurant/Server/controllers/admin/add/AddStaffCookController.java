@@ -26,7 +26,7 @@ public class AddStaffCookController {
     public ResponseEntity<?> addStaff(@RequestBody Staff staff){
         validateStaff(staff.getPesel());
 
-        staffService.saveStaff(staff, "ROLE_COOKER");
+        staffService.saveStaff(staff, "ROLE_COOK");
         counterRepository.save(Counter
                 .builder()
                 .count(0)
