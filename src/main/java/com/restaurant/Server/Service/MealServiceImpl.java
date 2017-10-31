@@ -58,5 +58,10 @@ public class MealServiceImpl implements MealService {
         mealRepository.save(meal);
     }
 
+    @Override
+    public void removeMeal(int mealId) {
+        mealRepository.removeByMealId(mealId);
+    }
+
 
 }

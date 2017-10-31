@@ -18,5 +18,6 @@ public interface MealService {
 
     void UpdateMealById(Meal newMeal);
     void saveMeal(Meal meal);
+    void removeMeal(int mealId);
 
 }
