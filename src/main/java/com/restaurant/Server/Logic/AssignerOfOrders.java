@@ -17,7 +17,6 @@ import java.util.Comparator;
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 public class AssignerOfOrders implements Assigner{
 
-    private CounterRepository counterRepository;
     private CounterService counterService;
 
     @Override
@@ -36,6 +35,6 @@ public class AssignerOfOrders implements Assigner{
     private void saveUpdatedCounterToRepository(Staff staff, Counter c) {
         c.setCount(c.getCount()+1);
         c.setStaff(staff);
-        counterRepository.save(c);
+        counterService.save(c);
     }
 }

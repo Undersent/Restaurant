@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public interface OrdersService {
     Collection<Orders> findAllOrdersByCustomer(Customer customer);
+    Optional<Orders> findByOrdersId(int id);
     //Optional<Orders> findByCustomer(Customer customer);
     void save(Orders order);
+
+    void removeOrder(int id);
 }

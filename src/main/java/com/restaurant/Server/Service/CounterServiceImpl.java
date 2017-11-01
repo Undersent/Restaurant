@@ -20,4 +20,9 @@ public class CounterServiceImpl implements CounterService {
     public Collection<Counter> findAll() {
         return counterRepository.findAll();
     }
+
+    @Override
+    public void save(Counter counter) {
+        counterRepository.save(counter);
+    }
 }

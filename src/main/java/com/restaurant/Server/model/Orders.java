@@ -26,10 +26,10 @@ public class Orders implements Serializable {
     private int staffId;
 
     @JoinColumn(name = "customer_id")
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     private Customer customer;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "meal_id")
     private Meal meal;
 

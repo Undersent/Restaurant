@@ -17,11 +17,12 @@ public class DeleteMealController{
     MealService mealService;
 
 @DeleteMapping
-public ResponseEntity<?> addMeal(@RequestBody Meal meal){
+public ResponseEntity<?> deleteMeal(@RequestBody Meal meal){
 
-        Meal mealFound = mealService.findByMealName(meal.getMealName())
+        Meal mealFound = mealService.findByMealId(meal.getMealId())
                 .orElseThrow(() ->new MealNotFoundException(meal.getMealId()));
         mealService.removeMeal(meal.getMealId());
+
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
         }
 
