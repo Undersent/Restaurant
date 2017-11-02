@@ -18,4 +18,5 @@ public interface StaffService {
     void saveStaff(Staff staff, String role);
     void UpdateStaffById(Staff staff);
 
+    void removeStaff(int staffId);
 }

@@ -17,8 +17,7 @@ import java.util.Comparator;
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 public class AssignerOfOrders implements Assigner{
 
-    private CounterRepository counterRepository;
-    CounterService counterService;
+    private CounterService counterService;
 
     @Override
     public void assignOrder(Customer customer, Orders order) {
@@ -30,12 +29,12 @@ public class AssignerOfOrders implements Assigner{
 
     private void AddOrdersToStaff(Counter c, Orders order) {
         order.setStaffId(c.getStaff().getStaffId());
-        saveUpdatedCounterToRepository(c.getStaff(), c); //poprawic, najpierw dostac countera  po id staffa a potem zapisywac
+        saveUpdatedCounterToRepository(c.getStaff(), c);
     }
 
     private void saveUpdatedCounterToRepository(Staff staff, Counter c) {
         c.setCount(c.getCount()+1);
         c.setStaff(staff);
-        counterRepository.save(c);
+        counterService.save(c);
     }
 }

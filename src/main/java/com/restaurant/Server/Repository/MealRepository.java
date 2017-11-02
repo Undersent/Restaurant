@@ -15,5 +15,5 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     Page<Meal> findAll(Pageable pageable);
     Collection<Meal> findMealsByPriceBetween(double lowerLimit, double higherLimit);
     Collection<Meal> findMealsByPriceBefore(double limit);
-
+    void removeByMealId(int id);
 }

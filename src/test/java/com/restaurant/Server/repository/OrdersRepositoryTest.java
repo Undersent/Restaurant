@@ -1,10 +1,7 @@
 package com.restaurant.Server.repository;
 
 import com.restaurant.Server.Repository.OrdersRepository;
-import com.restaurant.Server.model.Customer;
-import com.restaurant.Server.model.Orders;
-import com.restaurant.Server.model.Role;
-import com.restaurant.Server.model.Staff;
+import com.restaurant.Server.model.*;
 import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -17,20 +14,21 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @DataJpaTest
+//@ActiveProfiles("test")
 public class OrdersRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
@@ -40,45 +38,36 @@ public class OrdersRepositoryTest {
     private final Appender appender = mock(Appender.class);
     private final Logger logger = Logger.getRootLogger();
 
-    private String firstName = "Bozena";
-    private String lastName = "Pasztecik";
+    private Customer customer = createCustomer(1);
 
-    Customer customer = createCustomer(1);
-    Orders order = Orders
+    private Orders order = Orders
             .builder()
             .id(1)
-            .dateOfOrder("10.10.10")
-            .staffId(customer.getCustomerId())
+            .customer(customer)
+          //  .staffId(customer.getCustomerId())
+            .meal(Meal.builder().mealId(6).mealName("b").build())
+            .staffId(2)
             .build();
-    Orders order2 = Orders
+
+    private Orders order2 = Orders
             .builder()
             .id(2)
-            .dateOfOrder("06.06.06")
-            .staffId(customer.getCustomerId())
+            .meal(Meal.builder().mealId(5).mealName("a").build())
+            .customer(customer)
+            //.staffId(customer.getCustomerId())
+            //.staffId(2)
             .build();
 
 
     @Before
     public void setUp(){
+        entityManager.clear();
         logger.addAppender(appender);
-       // Logger.getLogger(OrdersRepositoryTest.class).info("START12: "+);
     }
 
     @After
     public void tearDown(){
         Logger.getLogger(OrdersRepositoryTest.class).info("COUNT: "+ordersRepository.count());
-        entityManager.clear();
-    }
-
-    private Staff createStaffWaiter(String fn, String ln){
-        return Staff
-                .builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .roles(new HashSet<>(Collections
-                        .singletonList(entityManager
-                                .find(Role.class, 1))))
-                .build();
     }
 
     private Customer createCustomer(int id){
@@ -88,74 +77,51 @@ public class OrdersRepositoryTest {
                 .build();
     }
 
-    private Orders createOrders(int id){
-        return Orders
-                .builder()
-                .id(id)
-                .build();
-    }
-
     @Test
     public void findAllOrdersTest(){
-        Orders order = createOrders(1);
-        Orders order2 = createOrders(2);
-
+        entityManager.merge(customer);
         entityManager.merge(order);
         entityManager.merge(order2);
         entityManager.flush();
 
         List<Orders> orders = ordersRepository.findAll();
-        assertEquals(orders.get(0).getId(), 1);
-        assertEquals(orders.get(1).getId(), 2);
+
+        assertEquals(orders.size(),2);
+        assertEquals("b", orders.get(0).getMeal().getMealName());
+        assertTrue(orders.stream().anyMatch(meal -> meal.getMeal().getMealName().equals("b")));
     }
 
     @Test
     public void findOrderByCustomerTest(){
-
-        Orders order = createOrders(1);
-        order.setCustomer(customer);
-        customer
-                .setOrder(Stream.of(order)
-                    .collect(Collectors.toCollection(ArrayList::new)));
-
-        entityManager.merge(customer);
-        entityManager.flush();
-
-        Optional<Orders> orders = ordersRepository.findByCustomer(customer);
-
-        assertNotNull(orders);
-        assertEquals(orders.get().getCustomer().getCustomerId(), 1);
-    }
-
-    @Test
-    public void findAllOrdersByCustomerTest(){
-        Customer customer = createCustomer(1);
-
+        //order.setCustomer(customer);
 //        customer
 //                .setOrder(Stream.of(order, order2)
-//                        .collect(Collectors.toCollection(ArrayList::new)));
-        //order.setCustomer(customer);
-        //order2.setCustomer(customer);//relacja dwukierunkowa
-
+//                    .collect(Collectors.toCollection(ArrayList::new)));
         entityManager.merge(order);
         entityManager.merge(order2);
         entityManager.flush();
 
         Collection<Orders> orders = ordersRepository.findAllByCustomer(customer);
 
-        assertEquals(orders.size(), 2);
-        orders.stream()
-                .filter(o -> o.getId() == 2)
-                .forEach(h -> assertEquals(h.getId(), 2));
+        assertEquals(2, orders.size());
+        assertNotNull(orders);
+        assertEquals(2, orders.stream()
+                .filter(o -> o.getMeal().getMealName().equals("b")
+                        || o.getMeal().getMealName().equals("a"))
+                .count());
     }
 
-//    @Test
-//    public void findOrderByCustomerId(){
-//        entityManager.merge(order);
-//        entityManager.merge(order2);
-//        entityManager.flush();
-//        Collection<Orders> orders = ordersRepository.findByCustomerId(1);
-//        assertEquals(orders.size(), 2);
-//
-//    }
+    @Test(expected = RuntimeException.class)
+    public void findAllOrdersByCustomerTest(){
+        Customer newCustomer = Customer.builder().customerId(666).build();
+        entityManager.persistAndFlush(newCustomer);
+        entityManager.merge(order);
+        entityManager.merge(order2);
+        entityManager.flush();
+
+        Collection<Orders> orders = ordersRepository.findAllByCustomer(newCustomer);
+
+        Orders ord = orders.stream().findAny().orElseThrow(() -> new RuntimeException("ups"));
+    }
+
 }

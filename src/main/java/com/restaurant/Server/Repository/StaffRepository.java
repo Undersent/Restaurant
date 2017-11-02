@@ -16,4 +16,5 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
     Optional<Staff> findByStaffId(int id);
     Optional<Staff> findByPesel(String pesel);
     Page<Staff> findAll(Pageable pageable);
+    void removeByStaffId(int id);
 }

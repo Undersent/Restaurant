@@ -34,14 +34,24 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Optional<Orders> findByCustomer(Customer customer) {
-        return ordersRepository.findByCustomer(customer);
+    public Optional<Orders> findByOrdersId(int id) {
+        return ordersRepository.findOrdersById(id);
     }
+
+//    @Override
+//    public Optional<Orders> findByCustomer(Customer customer) {
+//        return ordersRepository.findByCustomer(customer);
+//    }
 
     @Transactional
     @Override
     public void save(Orders order){
         order.setDateOfOrder(LocalDateTime.now().toString());
         ordersRepository.save(order);
+    }
+
+    @Override
+    public void removeOrder(int id) {
+        ordersRepository.removeOrdersById(id);
     }
 }

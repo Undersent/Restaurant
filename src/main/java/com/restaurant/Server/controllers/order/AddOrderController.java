@@ -33,35 +33,18 @@ public class AddOrderController {
     public ResponseEntity<?> addOrderForCustomer(@PathVariable("customerId") int customerId,
                                                  @PathVariable("mealId") int mealId,
                                                  @RequestBody(required = false) String description){
+        Customer customer = customerService
+                .findById(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
 
-        validateCustomer(customerId);
-        validateMeal( mealId);
         Orders order = Orders.builder()
-                .customer(customerService
-                        .findById(customerId).get())
-                .meal(this.mealService.findByMealId(mealId).get())
+                .customer(customer)
+                .meal(this.mealService.findByMealId(mealId).orElseThrow(() -> new MealNotFoundException(mealId)))
                 .otherDetails(description)
                 .build();
 
         ordersService.save(order);
+        assigner.assignOrder(customer, order);
 
-        assigner.assignOrder(customerService
-                .findById(customerId).get(), order);
-
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);//TODO
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
-
-    private void validateCustomer(int customerId) {
-        this.customerService.findById(customerId).orElseThrow(
-                () -> new CustomerNotFoundException(customerId)
-        );
-    }
-
-    private void validateMeal(int mealId) {
-        this.mealService.findByMealId(mealId).orElseThrow(
-                () -> new MealNotFoundException(mealId)
-        );
-    }
-
-
 }
