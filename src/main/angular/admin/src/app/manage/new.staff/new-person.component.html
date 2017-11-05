@@ -1,0 +1,37 @@
+<div class="container">
+    <h3>New person</h3>
+    <form #addPersonForm="ngForm" ngNativeValidate>
+        <div class="form-group">
+            <label for="personAddFirstName">First name</label>
+            <input type="text"
+                   class="form-control"
+                   value="{{person.firstName}}"
+                   id="personAddFirstName" #personAddFirstName required/>
+        </div>
+        <div class="form-group">
+            <label for="personAddSecondName">Second name</label>
+            <input type="text"
+                   class="form-control"
+                   value="{{person.lastName}}"
+                   id="personAddSecondName" required/>
+        </div>
+        <div class="form-group">
+            <label for="personAddPesel">Pesel</label>
+            <input type="text"
+                   class="form-control"
+                   value="{{person.pesel}}"
+                   id="personAddPesel" />
+        </div>
+        <div class="form-group">
+            <label for="personAddRole">Role</label>
+            <select class="form-control" id="personAddRole" required>
+                <option *ngFor="let role of roles"
+                        [value]="role">{{role}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success"
+                (click)="add(personAddFirstName.value); addPersonForm.reset()">
+            Submit
+        </button>
+    </form>
+</div>

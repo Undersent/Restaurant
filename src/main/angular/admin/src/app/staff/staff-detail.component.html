@@ -1,0 +1,19 @@
+<div *ngIf="person">
+  <h2>{{person.firstName}} details</h2>
+  <div>
+    <label>id: </label>{{person.staffId}}</div>
+  <div>
+    <label>First name: </label>{{person.firstName}}
+   </div>
+  <div>
+    <label>Last name: </label>{{person.lastName}}
+  </div>
+  <div>
+    <label>Pesel: </label>{{person.pesel}}
+  </div>
+  <div>
+    <label>Role: </label>{{person.roles.values().next().value}}
+  </div>
+  <button (click)="goBack()">Back</button>
+  <button (click)="edit()">Edit</button>
+</div>

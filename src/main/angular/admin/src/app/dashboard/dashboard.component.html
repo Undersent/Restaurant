@@ -1,0 +1,9 @@
+<h3>Currently working staff</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let person of staff" [routerLink]="['/detail', person.staffId]" class="col-1-4">
+    <div class="module person">
+      <h4>{{person.firstName}}</h4>
+    </div>
+  </a>
+</div>
+<person-search></person-search>

@@ -1,0 +1,17 @@
+<h2 align="center">Staff management</h2>
+
+<table>
+    <tbody *ngFor="let person of staff" (click)="onSelect(person)">
+        <tr >
+            <td class="badge" width="40px">
+                <span >{{person.staffId}}</span>
+            </td>
+            <td width="5px">
+            </td>
+            <td class="staff" >
+                <span>{{person.firstName}}</span>
+                <span>{{person.lastName}}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
