@@ -19,13 +19,13 @@ public class GetStaffController {
     StaffService staffService;
 
     @GetMapping(value={"/lastName"})
-    public Optional<Staff> getStaffByName(@RequestParam("lastName") String lastName){
-        return this.staffService.findStaffByLastName(lastName);
+    public Staff getStaffByName(@RequestParam("lastName") String lastName){
+        return this.staffService.findStaffByLastName(lastName).get();
     }
 
     @GetMapping(value ={"/{id}"})
-    public Optional<Staff> getStaffById(@PathVariable("id") int id){
-        return this.staffService.findStaffById(id);
+    public Staff getStaffById(@PathVariable("id") int id){
+        return this.staffService.findStaffById(id).get();
     }
 
     @GetMapping(value={"/all"})

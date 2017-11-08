@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface OrdersService {
     Collection<Orders> findAllOrdersByCustomer(Customer customer);
+    Collection<Orders> findAllOrdersByStaffId(int id);
     Optional<Orders> findByOrdersId(int id);
     //Optional<Orders> findByCustomer(Customer customer);
     void save(Orders order);

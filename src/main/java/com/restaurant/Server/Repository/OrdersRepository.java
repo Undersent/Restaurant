@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     //Collection<Orders> findAllByStaff(Staff staff);
     Collection<Orders> findAllByCustomer(Customer customer);
-
+    Collection<Orders> findAllByStaffId(int id);
     Optional<Orders> findOrdersById(int id);
     void removeOrdersById(int id);
     //Optional<Orders> findByCustomer(Customer customer);
