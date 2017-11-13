@@ -34,6 +34,11 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public Collection<Orders> findAllOrdersByStaffId(int id) {
+        return ordersRepository.findAllByStaffId(id);
+    }
+
+    @Override
     public Optional<Orders> findByOrdersId(int id) {
         return ordersRepository.findOrdersById(id);
     }

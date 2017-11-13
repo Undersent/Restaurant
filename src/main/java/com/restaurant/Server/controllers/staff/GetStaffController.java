@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
@@ -21,13 +20,13 @@ public class GetStaffController {
     StaffService staffService;
 
     @GetMapping(value={"/lastName"})
-    public Optional<Staff> getStaffByName(@RequestParam("lastName") String lastName){
-        return this.staffService.findStaffByLastName(lastName);
+    public Staff getStaffByName(@RequestParam("lastName") String lastName){
+        return this.staffService.findStaffByLastName(lastName).get();
     }
 
     @GetMapping(value ={"/id"})
-    public Optional<Staff> getStaffById(@RequestParam("id") int id){
-        return this.staffService.findStaffById(id);
+    public Staff getStaffById(@RequestParam("id") int id){
+        return this.staffService.findStaffById(id).get();
     }
 
     @GetMapping(value={"/all"})

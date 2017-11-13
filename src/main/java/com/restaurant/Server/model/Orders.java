@@ -1,5 +1,6 @@
 package com.restaurant.Server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -27,6 +28,7 @@ public class Orders implements Serializable {
 
     @JoinColumn(name = "customer_id")
     @ManyToOne(cascade=CascadeType.MERGE)
+    @JsonIgnoreProperties("order")
     private Customer customer;
 
     @OneToOne(cascade=CascadeType.MERGE)

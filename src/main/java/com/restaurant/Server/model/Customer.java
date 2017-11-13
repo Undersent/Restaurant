@@ -1,5 +1,6 @@
 package com.restaurant.Server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -24,5 +25,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer",
             cascade=CascadeType.ALL)
+    @JsonIgnoreProperties("customer")
     private List<Orders> order;
 }
