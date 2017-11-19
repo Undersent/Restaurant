@@ -15,7 +15,7 @@ public interface StaffService {
     Optional<Staff> findStaffById(int id);
     Optional<Staff> findStaffByPesel(String pesel);
     Page<Staff> findAll(Pageable pageable);
-    void saveStaff(Staff staff, String role);
+    Staff saveStaff(Staff staff, String role);
     void UpdateStaffById(Staff staff);
 
     void removeStaff(int staffId);
