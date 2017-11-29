@@ -19,7 +19,7 @@ var DashboardComponent = (function () {
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.staffService.getWholeStaff()
-            .then(function (staff) { return _this.staff = staff.slice(1, 5); });
+            .then(function (staff) { return _this.staff = staff.slice(0, 4); });
     };
     return DashboardComponent;
 }());
