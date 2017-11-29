@@ -18,7 +18,7 @@ export class MenuService {
         return this.http.get(url)
             .toPromise()
             .then(response => {
-                return response.json() as Meal[];
+                return response.json().content as Meal[];
             })
             .catch(this.handleError);
     }
@@ -41,9 +41,9 @@ export class MenuService {
 
     create(name: string, price: number, isAvailable: boolean): Promise<Meal> {
         let meal: Meal = new Meal();
-        meal.name = name;
+        meal.mealName = name;
         meal.price = price;
-        meal.isAvailable = isAvailable;
+        meal.available = isAvailable;
         return this.http
             .post(this.mealUrl, JSON.stringify(meal), {headers: this.updateHeaders})
             .toPromise()
@@ -52,7 +52,7 @@ export class MenuService {
     }
 
     update(meal: Meal): Promise<Meal> {
-        const url = `${this.mealUrl}/${meal.id}`;
+        const url = `${this.mealUrl}/${meal.mealId}`;
         return this.http
             .put(url, JSON.stringify(meal), {headers: this.updateHeaders})
             .toPromise()

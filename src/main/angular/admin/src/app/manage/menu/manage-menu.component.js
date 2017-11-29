@@ -11,10 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var menu_service_1 = require("../../services/menu.service");
 var ManageMenuComponent = (function () {
-    function ManageMenuComponent(router) {
+    function ManageMenuComponent(router, menuService) {
         this.router = router;
+        this.menuService = menuService;
     }
+    ManageMenuComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.menuService.getAllMeal()
+            .then(function (meals) { return _this.menu = meals; });
+    };
     return ManageMenuComponent;
 }());
 ManageMenuComponent = __decorate([
@@ -23,7 +30,8 @@ ManageMenuComponent = __decorate([
         templateUrl: './manage-menu.component.html',
         styleUrls: ['./manage-menu.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router])
+    __metadata("design:paramtypes", [router_1.Router,
+        menu_service_1.MenuService])
 ], ManageMenuComponent);
 exports.ManageMenuComponent = ManageMenuComponent;
 //# sourceMappingURL=manage-menu.component.js.map
