@@ -14,7 +14,7 @@ export class MenuService {
     constructor(private http: Http) { }
 
     getAllMeal(): Promise<Meal[]> {
-        let url = this.mealUrl + '/all';
+        let url = this.mealUrl + '/all?page=0&size=20&sort=price,desc';
         return this.http.get(url)
             .toPromise()
             .then(response => {

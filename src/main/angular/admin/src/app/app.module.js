@@ -22,6 +22,7 @@ var manage_component_1 = require("./manage/manage.component");
 var manage_menu_component_1 = require("./manage/menu/manage-menu.component");
 var route_params_service_1 = require("./services/route-params.service");
 var staff_search_service_1 = require("./services/staff-search.service");
+var menu_service_1 = require("./services/menu.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -49,6 +50,7 @@ AppModule = __decorate([
             staff_service_1.StaffService,
             staff_search_service_1.StaffSearchService,
             route_params_service_1.RouteParamsService,
+            menu_service_1.MenuService
         ],
         bootstrap: [app_component_1.AppComponent]
     })
