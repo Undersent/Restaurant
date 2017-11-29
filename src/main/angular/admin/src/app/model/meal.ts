@@ -1,6 +1,6 @@
 export class Meal {
-    id: number;
-    isAvailable: boolean;
-    name: string;
+    mealId: number;
+    available: boolean;
+    mealName: string;
     price: number;
 }
