@@ -34,7 +34,7 @@ public class AddMealController {
     private void validateMealName(String mealName) {
         this.mealService
                 .findByMealName(mealName)
-                .filter(mealName::equals)
+                .filter(m -> m.getMealName().equalsIgnoreCase(mealName))
                 .ifPresent(m -> {
                    throw new RuntimeException("meal with that name exists");
                 });

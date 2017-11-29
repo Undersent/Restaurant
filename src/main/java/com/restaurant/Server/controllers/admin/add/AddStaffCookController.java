@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.util.StringUtils;
-
+@Deprecated
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @RequestMapping("admin/add/staff/cook")
@@ -21,6 +21,7 @@ public class AddStaffCookController {
 
     private StaffService staffService;
     private CounterRepository counterRepository;
+
 
     @PostMapping
     public ResponseEntity<?> addStaff(@RequestBody Staff staff){

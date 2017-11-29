@@ -1,4 +1,4 @@
-package com.restaurant.Server.controllers.admin.delete;
+package com.restaurant.Server.controllers.order;
 
 import com.restaurant.Server.Logic.Deleter;
 import com.restaurant.Server.Service.OrdersService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-@RequestMapping("admin/delete/order")
+@RequestMapping("/delete/order")
 public class DeleteOrderController {
 
     OrdersService ordersService;

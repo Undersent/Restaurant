@@ -31,7 +31,10 @@ public class Staff implements Serializable {
     @Column(name = "pesel")
     private String pesel;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Column(name = "email")
+    private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "staff_role", joinColumns = @JoinColumn(name = "staff_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -43,7 +46,6 @@ public class Staff implements Serializable {
     @Builder.Default
     private boolean isAvailable = true;
 
-    @JsonIgnore
     @Column(name = "password")
     private String password;
 

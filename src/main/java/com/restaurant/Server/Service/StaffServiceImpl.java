@@ -48,11 +48,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void saveStaff(Staff staff, String role) {
+    public Staff saveStaff(Staff staff, String role) {
         staff.setRoles(new HashSet<>(Collections
                 .singletonList(roleRepository
                         .findByRole(role))));
-        staffRepository.save(staff);
+        return staffRepository.save(staff);
     }
 
     @Override
