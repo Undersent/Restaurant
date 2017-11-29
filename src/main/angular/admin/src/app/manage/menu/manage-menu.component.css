@@ -42,6 +42,7 @@ table th, table td {
 
 table td {
     text-align: right;
+    font-size: medium;
 }
 
 table tbody th {
