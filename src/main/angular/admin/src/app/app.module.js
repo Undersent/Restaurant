@@ -23,6 +23,7 @@ var manage_menu_component_1 = require("./manage/menu/manage-menu.component");
 var route_params_service_1 = require("./services/route-params.service");
 var staff_search_service_1 = require("./services/staff-search.service");
 var menu_service_1 = require("./services/menu.service");
+var edit_menu_component_1 = require("./manage/menu/edit-menu.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -45,6 +46,7 @@ AppModule = __decorate([
             new_person_component_1.NewPersonComponent,
             manage_component_1.ManageComponent,
             manage_menu_component_1.ManageMenuComponent,
+            edit_menu_component_1.EditMenuComponent
         ],
         providers: [
             staff_service_1.StaffService,

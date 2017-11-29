@@ -14,6 +14,7 @@ var staff_detail_component_1 = require("./staff/staff-detail.component");
 var new_person_component_1 = require("./manage/new.staff/new-person.component");
 var manage_component_1 = require("./manage/manage.component");
 var manage_menu_component_1 = require("./manage/menu/manage-menu.component");
+var edit_menu_component_1 = require("./manage/menu/edit-menu.component");
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent },
@@ -22,6 +23,7 @@ var routes = [
     { path: 'staff/new', component: new_person_component_1.NewPersonComponent },
     { path: 'manage', component: manage_component_1.ManageComponent },
     { path: 'manage/menu', component: manage_menu_component_1.ManageMenuComponent },
+    { path: 'manage/menu/edit', component: edit_menu_component_1.EditMenuComponent },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

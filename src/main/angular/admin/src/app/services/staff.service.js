@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+var staff_1 = require("../model/staff");
 var StaffService = (function () {
     function StaffService(http) {
         this.http = http;
@@ -42,8 +43,13 @@ var StaffService = (function () {
             .catch(this.handleError);
     };
     StaffService.prototype.create = function (name, surname, role, pesel) {
+        var person = new staff_1.Staff();
+        person.firstName = name;
+        person.lastName = surname;
+        person.pesel = pesel;
+        person.roles = new Set(role);
         return this.http
-            .post(this.staffUrl, JSON.stringify({ name: name }), { headers: this.updateHeaders })
+            .post(this.staffUrl, JSON.stringify(person), { headers: this.updateHeaders })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);

@@ -1,0 +1,32 @@
+<h2 align="center"><b>Editing menu</b></h2>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <td><b>Meal Name</b></td>
+            <td><b>Price</b></td>
+            <td><b>Availability</b></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let meal of menu">
+            <td><input value="{{meal.mealName}}"></td>
+            <td><input value="{{meal.price}}"></td>
+            <td><input type="checkbox"
+                       *ngIf="meal.available == true" checked>
+                <input type="checkbox"
+                       *ngIf="meal.available == false">
+            </td>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+        <tr>
+            <td><input></td>
+            <td><input></td>
+            <td><input type="checkbox" checked>
+            </td>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

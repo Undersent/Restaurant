@@ -15,6 +15,7 @@ import {ManageMenuComponent} from './manage/menu/manage-menu.component';
 import {RouteParamsService} from "./services/route-params.service";
 import {StaffSearchService} from "./services/staff-search.service";
 import {MenuService} from "./services/menu.service";
+import {EditMenuComponent} from "./manage/menu/edit-menu.component";
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import {MenuService} from "./services/menu.service";
     NewPersonComponent,
     ManageComponent,
     ManageMenuComponent,
+    EditMenuComponent
   ],
   providers: [
       StaffService,
