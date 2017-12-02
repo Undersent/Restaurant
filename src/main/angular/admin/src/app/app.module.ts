@@ -8,12 +8,10 @@ import { DashboardComponent }   from './dashboard/dashboard.component';
 import { StaffComponent }      from './staff/staff.component';
 import { PersonDetailComponent }  from './staff/staff-detail.component';
 import { StaffService }          from './services/staff.service';
-import { StaffSearchComponent }  from './staff/staff-search.component';
 import { NewPersonComponent } from './manage/new.staff/new-person.component';
 import {ManageComponent} from './manage/manage.component';
 import {ManageMenuComponent} from './manage/menu/manage-menu.component';
 import {RouteParamsService} from "./services/route-params.service";
-import {StaffSearchService} from "./services/staff-search.service";
 import {MenuService} from "./services/menu.service";
 import {EditMenuComponent} from "./manage/menu/edit-menu.component";
 
@@ -29,7 +27,6 @@ import {EditMenuComponent} from "./manage/menu/edit-menu.component";
     DashboardComponent,
     PersonDetailComponent,
     StaffComponent,
-    StaffSearchComponent,
     NewPersonComponent,
     ManageComponent,
     ManageMenuComponent,
@@ -37,7 +34,6 @@ import {EditMenuComponent} from "./manage/menu/edit-menu.component";
   ],
   providers: [
       StaffService,
-      StaffSearchService,
       RouteParamsService,
       MenuService
   ],

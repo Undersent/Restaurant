@@ -16,12 +16,10 @@ var dashboard_component_1 = require("./dashboard/dashboard.component");
 var staff_component_1 = require("./staff/staff.component");
 var staff_detail_component_1 = require("./staff/staff-detail.component");
 var staff_service_1 = require("./services/staff.service");
-var staff_search_component_1 = require("./staff/staff-search.component");
 var new_person_component_1 = require("./manage/new.staff/new-person.component");
 var manage_component_1 = require("./manage/manage.component");
 var manage_menu_component_1 = require("./manage/menu/manage-menu.component");
 var route_params_service_1 = require("./services/route-params.service");
-var staff_search_service_1 = require("./services/staff-search.service");
 var menu_service_1 = require("./services/menu.service");
 var edit_menu_component_1 = require("./manage/menu/edit-menu.component");
 var AppModule = (function () {
@@ -42,7 +40,6 @@ AppModule = __decorate([
             dashboard_component_1.DashboardComponent,
             staff_detail_component_1.PersonDetailComponent,
             staff_component_1.StaffComponent,
-            staff_search_component_1.StaffSearchComponent,
             new_person_component_1.NewPersonComponent,
             manage_component_1.ManageComponent,
             manage_menu_component_1.ManageMenuComponent,
@@ -50,7 +47,6 @@ AppModule = __decorate([
         ],
         providers: [
             staff_service_1.StaffService,
-            staff_search_service_1.StaffSearchService,
             route_params_service_1.RouteParamsService,
             menu_service_1.MenuService
         ],
