@@ -44,7 +44,7 @@ public class GetStaffController {
     private boolean hasStaffRole(Staff staff) {
         Set<Role> roles = staff.getRoles();
         for (Role role: roles){
-            if (role.getRole().equals("ROLE_STAFF")){
+            if (role.getRole().equals("ROLE_STAFF") || role.getRole().equals("ROLE_COOK")){
                 return true;
             }
         }
