@@ -1,18 +1,24 @@
 <div *ngIf="person">
   <h2>{{person.firstName}} details</h2>
   <div>
-    <label>id: </label>{{person.staffId}}</div>
+    <label class="lab">id: </label>
+    <label class="info">{{person.staffId}}</label>
+  </div>
   <div>
-    <label>First name: </label>{{person.firstName}}
+    <label class="lab">First name: </label>
+    <label class="info">{{person.firstName}}</label>
    </div>
   <div>
-    <label>Last name: </label>{{person.lastName}}
+    <label class="lab">Last name: </label>
+    <label class="info">{{person.lastName}}</label>
   </div>
   <div>
-    <label>Pesel: </label>{{person.pesel}}
+    <label class="lab">Pesel: </label>
+    <label class="info">{{person.pesel}}</label>
   </div>
   <div>
-    <label>Role: </label>{{personRole}}
+    <label class="lab">Role: </label>
+    <label class="info">{{personRole}}</label>
   </div>
   <button (click)="goBack()">Back</button>
   <button (click)="edit()">Edit</button>

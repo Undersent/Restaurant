@@ -1,15 +1,20 @@
-label {
+.lab {
   display: inline-block;
   width: 3em;
   margin: .5em 0;
   color: #607D8B;
   font-weight: bold;
 }
-input {
-  height: 2em;
-  font-size: 1em;
-  padding-left: .4em;
+
+div {
+  margin-left: 1%;
 }
+
+.info {
+  margin-left: 5px;
+  font-weight: bolder;
+}
+
 button {
   margin-top: 20px;
   font-family: Arial;
