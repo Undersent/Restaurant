@@ -4,16 +4,10 @@ import com.restaurant.Server.Service.MealService;
 import com.restaurant.Server.model.Meal;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
@@ -22,12 +16,22 @@ public class AddMealController {
 
     MealService mealService;
 
-    @PostMapping
+    @PostMapping(value = "/new")
     public ResponseEntity<?> addMeal(@RequestBody Meal meal){
         this.validateMealName(meal.getMealName());
-
         mealService.saveMeal(meal);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
 
+    @PostMapping(value = "/delete")
+    public ResponseEntity<?> deleteMeal(@RequestParam(value = "id") int id){
+        mealService.removeMeal(id);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> updateMeal(@RequestBody Meal meal){
+        mealService.saveMeal(meal);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 

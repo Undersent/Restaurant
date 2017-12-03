@@ -11,21 +11,27 @@
         </thead>
         <tbody>
         <tr *ngFor="let meal of menu">
-            <td><input value="{{meal.mealName}}"></td>
-            <td><input value="{{meal.price}}"></td>
-            <td><input type="checkbox"
-                       *ngIf="meal.available == true" checked>
-                <input type="checkbox"
-                       *ngIf="meal.available == false">
+            <td><input value="{{meal.mealName}}" #editMealName></td>
+            <td><input value="{{meal.price}}" #editMealPrice></td>
+            <td><input type="checkbox" #editMealAv checked>
             </td>
-            <td><button type="submit">Submit</button></td>
+            <td><button type="submit"
+                        (click)="submitMeal(editMealName.value,
+                                            editMealPrice.value,
+                                            editMealAv.checked,
+                                            meal.mealId)">
+                Submit</button></td>
         </tr>
         <tr>
-            <td><input></td>
-            <td><input></td>
-            <td><input type="checkbox" checked>
+            <td><input #newMealName></td>
+            <td><input #newMealPrice></td>
+            <td><input type="checkbox" checked #newMealAvailable>
             </td>
-            <td><button type="submit">Submit</button></td>
+            <td><button type="submit"
+                        (click)="submitMeal(newMealName.value,
+                                         newMealPrice.value,
+                                         newMealAvailable.checked)">
+                Submit</button></td>
         </tr>
         </tbody>
     </table>

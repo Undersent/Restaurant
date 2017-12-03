@@ -9,9 +9,17 @@ import {Meal} from "../model/meal";
 export class MenuService {
 
     private updateHeaders = new Headers({'Content-Type': 'application/json'});
+    private username: string = '123';
+    private password: string = 'admin';
     private mealUrl = 'http://localhost:8080/get/meal';
+    private deleteMealUrl = 'http://localhost:8080/admin/add/meal/delete';
+    private addMealUrl = 'http://localhost:8080/admin/add/meal/new';
+    private updateMealUrl = 'http://localhost:8080/admin/add/meal';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        this.updateHeaders.append("Authorization", "Basic "
+            + btoa(this.username + ":" + this.password));
+    }
 
     getAllMeal(): Promise<Meal[]> {
         let url = this.mealUrl + '/all?page=0&size=20&sort=price,desc';
@@ -23,19 +31,10 @@ export class MenuService {
             .catch(this.handleError);
     }
 
-    getMeal(id: number): Promise<Meal> {
-        const url = `${this.mealUrl}/id?id=${id}`;
-        return this.http.get(url)
-            .toPromise()
-            .then(response => response.json() as Meal)
-            .catch(this.handleError);
-    }
-
     delete(id: number): Promise<void> {
-        const url = `${this.mealUrl}/${id}`;
-        return this.http.delete(url, {headers: this.updateHeaders})
+        const url = `${this.deleteMealUrl}?id=${id}`;
+        return this.http.post(url, JSON.stringify(id),{headers: this.updateHeaders})
             .toPromise()
-            .then(() => null)
             .catch(this.handleError);
     }
 
@@ -45,19 +44,24 @@ export class MenuService {
         meal.price = price;
         meal.available = isAvailable;
         return this.http
-            .post(this.mealUrl, JSON.stringify(meal), {headers: this.updateHeaders})
+            .post(this.addMealUrl, JSON.stringify(meal), {headers: this.updateHeaders})
             .toPromise()
-            .then(res => res.json().data as Meal)
             .catch(this.handleError);
     }
 
     update(meal: Meal): Promise<Meal> {
-        const url = `${this.mealUrl}/${meal.mealId}`;
+        if (meal.price == 0 || this.isNullOrUndefined(meal.price) ||
+            meal.mealName == '' || this.isNullOrUndefined(meal.mealName))
+            this.delete(meal.mealId);
+        else
         return this.http
-            .put(url, JSON.stringify(meal), {headers: this.updateHeaders})
+            .post(this.updateMealUrl, JSON.stringify(meal), {headers: this.updateHeaders})
             .toPromise()
-            .then(() => meal)
             .catch(this.handleError);
+    }
+
+    private isNullOrUndefined(it: any) {
+        return it == null || it == undefined;
     }
 
     private handleError(error: any): Promise<any> {
