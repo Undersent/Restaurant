@@ -29,10 +29,32 @@ var NewPersonComponent = (function () {
         }
     };
     NewPersonComponent.prototype.add = function (name, surname, role, pesel) {
+        var _this = this;
         if (!name || !surname || !role || !pesel) {
+            console.log("Some fields are not present");
             return;
         }
-        this.staffService.create(name, surname, role, pesel);
+        var person = new staff_1.Staff();
+        person.firstName = name;
+        person.lastName = surname;
+        person.pesel = pesel;
+        person.roles = this.getRole(role);
+        var serviceResponse = this.staffService.create(person, role);
+        serviceResponse.then(function (res) {
+            if (res == "staff with that pesel exists") {
+                _this.staffService.update(person);
+            }
+        });
+    };
+    NewPersonComponent.prototype.getRole = function (role) {
+        var roles = new Set();
+        if (role == 'Waiter') {
+            roles.add({ id: 1, role: "ROLE_STAFF" });
+        }
+        if (role == 'Cook') {
+            roles.add({ id: 2, role: "ROLE_COOK" });
+        }
+        return roles;
     };
     return NewPersonComponent;
 }());

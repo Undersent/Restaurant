@@ -13,24 +13,25 @@
             <input type="text"
                    class="form-control"
                    value="{{person.lastName}}"
-                   id="personAddSecondName" required/>
+                   id="personAddSecondName" #personAddSecondName required/>
         </div>
         <div class="form-group">
-            <label for="personAddPesel" required>Pesel</label>
+            <label for="personAddPesel">Pesel</label>
             <input type="text"
                    class="form-control"
                    value="{{person.pesel}}"
-                   id="personAddPesel" />
+                   id="personAddPesel" #personAddPesel required/>
         </div>
         <div class="form-group">
             <label for="personAddRole">Role</label>
-            <select class="form-control" id="personAddRole" required>
+            <select class="form-control" id="personAddRole" #personAddRole required>
                 <option *ngFor="let role of roles"
                         [value]="role">{{role}}</option>
             </select>
         </div>
         <button type="submit" class="btn btn-success"
-                (click)="add(personAddFirstName.value); addPersonForm.reset()">
+                (click)="add(personAddFirstName.value, personAddSecondName.value,
+                personAddRole.value, personAddPesel.value); addPersonForm.reset()">
             Submit
         </button>
     </form>

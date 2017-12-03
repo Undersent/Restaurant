@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-var staff_1 = require("../model/staff");
 var StaffService = (function () {
     function StaffService(http) {
         this.http = http;
@@ -20,6 +19,9 @@ var StaffService = (function () {
         this.username = '123';
         this.password = 'admin';
         this.staffUrl = 'http://localhost:8080/get/staff';
+        this.updateStaffUrl = 'http://localhost:8080/admin/update/staff';
+        this.createWaiterUrl = 'http://localhost:8080/admin/add/staff/waiter';
+        this.createCookUrl = 'http://localhost:8080/admin/add/staff/cook';
         this.updateHeaders.append("Authorization", "Basic "
             + btoa(this.username + ":" + this.password));
     }
@@ -39,36 +41,44 @@ var StaffService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    StaffService.prototype.delete = function (id) {
-        var url = this.staffUrl + "/" + id;
-        return this.http.delete(url, { headers: this.updateHeaders })
-            .toPromise()
-            .then(function () { return null; })
-            .catch(this.handleError);
-    };
-    StaffService.prototype.create = function (name, surname, role, pesel) {
-        var person = new staff_1.Staff();
-        person.firstName = name;
-        person.lastName = surname;
-        person.pesel = pesel;
-        person.roles = new Set(role);
+    StaffService.prototype.create = function (person, role) {
+        var url = this.getUrlFromRole(role);
         return this.http
-            .post(this.staffUrl, JSON.stringify(person), { headers: this.updateHeaders })
+            .post(url, JSON.stringify(person), { headers: this.updateHeaders })
             .toPromise()
-            .then(function (res) { return res.json().data; })
-            .catch(this.handleError);
+            .then(function (response) {
+            return 'OK';
+        })
+            .catch(this.handleErrorFromCreate);
     };
     StaffService.prototype.update = function (person) {
-        var url = this.staffUrl + "/" + person.staffId;
         return this.http
-            .put(url, JSON.stringify(person), { headers: this.updateHeaders })
+            .post(this.updateStaffUrl, JSON.stringify(person), { headers: this.updateHeaders })
             .toPromise()
-            .then(function () { return person; })
+            .then(function (response) {
+            return 'OK';
+        })
             .catch(this.handleError);
+    };
+    StaffService.prototype.handleErrorFromCreate = function (error) {
+        if (error.json().message == 'staff with that pesel exists') {
+            return new Promise(function (resolve, reject) { resolve("staff with that pesel exists"); });
+        }
+        else {
+            return Promise.reject(error.message || error);
+        }
     };
     StaffService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    };
+    StaffService.prototype.getUrlFromRole = function (role) {
+        if (role == 'Waiter') {
+            return this.createWaiterUrl;
+        }
+        else {
+            return this.createCookUrl;
+        }
     };
     return StaffService;
 }());
