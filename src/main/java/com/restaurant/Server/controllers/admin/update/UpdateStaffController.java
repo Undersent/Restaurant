@@ -6,10 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
@@ -18,18 +17,19 @@ public class UpdateStaffController {
 
     StaffService staffService;
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<?> updateStaff(@RequestBody Staff staff){
-        validateStaff(staff.getPesel());
-        this.staffService.UpdateStaffById(staff);
+        Optional<Staff> optionalStaff = staffService.findStaffByPesel(staff.getPesel());
+        if (!optionalStaff.isPresent()) {
+            throw new RuntimeException();
+        } else {
+            Staff actualStaff = optionalStaff.get();
+            actualStaff.setRoles(staff.getRoles());
+            actualStaff.setFirstName(staff.getFirstName());
+            actualStaff.setLastName(staff.getLastName());
+            this.staffService.UpdateStaffById(actualStaff);
 
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
-    }
-
-    private void validateStaff(String pesel) {
-        staffService.findStaffByPesel(pesel)
-                .orElseThrow(
-                    () ->  new RuntimeException()
-        );
+            return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        }
     }
 }
