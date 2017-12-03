@@ -26,8 +26,8 @@ export class NewPersonComponent implements OnInit {
         }
     }
 
-    add(name: string, surname: string, role: string, pesel?: string): void {
-        if (!name || !surname || !role) { return; }
+    add(name: string, surname: string, role: string, pesel: string): void {
+        if (!name || !surname || !role || !pesel) { return; }
         this.staffService.create(name, surname, role, pesel);
     }
 }

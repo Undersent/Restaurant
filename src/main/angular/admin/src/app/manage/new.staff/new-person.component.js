@@ -29,7 +29,7 @@ var NewPersonComponent = (function () {
         }
     };
     NewPersonComponent.prototype.add = function (name, surname, role, pesel) {
-        if (!name || !surname || !role) {
+        if (!name || !surname || !role || !pesel) {
             return;
         }
         this.staffService.create(name, surname, role, pesel);
