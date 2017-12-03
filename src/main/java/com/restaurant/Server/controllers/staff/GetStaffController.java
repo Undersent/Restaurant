@@ -1,6 +1,7 @@
 package com.restaurant.Server.controllers.staff;
 
 import com.restaurant.Server.Service.StaffService;
+import com.restaurant.Server.model.Role;
 import com.restaurant.Server.model.Staff;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor(onConstructor = @_(@Autowired))
@@ -33,6 +36,18 @@ public class GetStaffController {
     public List<Staff> staffList(){
         return this.staffService
                 .findAll(PageRequest.of(0,20))
-                .getContent();
+                .filter(this::hasStaffRole)
+                .stream()
+                .collect(Collectors.toList());
+    }
+
+    private boolean hasStaffRole(Staff staff) {
+        Set<Role> roles = staff.getRoles();
+        for (Role role: roles){
+            if (role.getRole().equals("ROLE_STAFF")){
+                return true;
+            }
+        }
+        return false;
     }
 }
