@@ -13,8 +13,9 @@ import {RouteParamsService} from "../services/route-params.service";
   styleUrls: [ './staff-detail.component.css' ]
 })
 export class PersonDetailComponent implements OnInit {
+    personRole: string;
 
-  person: Staff;
+    person: Staff;
 
     constructor(
         private staffService: StaffService,
@@ -29,8 +30,17 @@ export class PersonDetailComponent implements OnInit {
       .switchMap((params: ParamMap) => {
         return this.staffService
             .getPerson(+params.get('staffId'));
-        }).subscribe(person => this.person = person);
+        }).subscribe(person => {this.person = person;
+        this.setRole((person.roles[0].role));});
   }
+
+    private setRole(role: string ) {
+        if (role == 'ROLE_STAFF'){
+            this.personRole = 'Waiter';
+        } else if(role == 'ROLE_COOK'){
+            this.personRole = 'Cook';
+        }
+    }
 
   edit(): void {
       this.routeParamsService.person = this.person;

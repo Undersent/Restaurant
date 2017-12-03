@@ -29,7 +29,18 @@ var PersonDetailComponent = (function () {
             .switchMap(function (params) {
             return _this.staffService
                 .getPerson(+params.get('staffId'));
-        }).subscribe(function (person) { return _this.person = person; });
+        }).subscribe(function (person) {
+            _this.person = person;
+            _this.setRole((person.roles[0].role));
+        });
+    };
+    PersonDetailComponent.prototype.setRole = function (role) {
+        if (role == 'ROLE_STAFF') {
+            this.personRole = 'Waiter';
+        }
+        else if (role == 'ROLE_COOK') {
+            this.personRole = 'Cook';
+        }
     };
     PersonDetailComponent.prototype.edit = function () {
         this.routeParamsService.person = this.person;
