@@ -35,7 +35,6 @@ public class AddStaffWaiterController {
     private void validateStaff(String pesel) {
         this.staffService
                 .findStaffByPesel(pesel)
-                .filter(pesel::equals)
                 .ifPresent(s -> {
                     throw new RuntimeException("staff with that pesel exists");
                 });

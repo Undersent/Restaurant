@@ -40,7 +40,6 @@ public class AddStaffCookController {
     private void validateStaff(String pesel) {
         this.staffService
                 .findStaffByPesel(pesel)
-                .filter(staff -> staff.getPesel().equals(pesel))
                 .ifPresent(s -> {
                     throw new RuntimeException("staff with that pesel exists");
                 });
