@@ -55,9 +55,6 @@ var StaffService = (function () {
         return this.http
             .post(this.updateStaffUrl, JSON.stringify(person), { headers: this.updateHeaders })
             .toPromise()
-            .then(function (response) {
-            return 'OK';
-        })
             .catch(this.handleError);
     };
     StaffService.prototype.handleErrorFromCreate = function (error) {
