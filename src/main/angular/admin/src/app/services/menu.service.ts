@@ -23,7 +23,7 @@ export class MenuService {
 
     getAllMeal(): Promise<Meal[]> {
         let url = this.mealUrl + '/all?page=0&size=20&sort=price,desc';
-        return this.http.get(url)
+        return this.http.get(url, {headers: this.updateHeaders})
             .toPromise()
             .then(response => {
                 return response.json().content as Meal[];

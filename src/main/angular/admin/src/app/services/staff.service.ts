@@ -9,13 +9,17 @@ import { Staff } from '../model/staff';
 export class StaffService {
 
   private updateHeaders = new Headers({'Content-Type': 'application/json'});
+  private username: string = '123';
+  private password: string = 'admin';
   private staffUrl = 'http://localhost:8080/get/staff';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+      this.updateHeaders.append("Authorization", "Basic "
+          + btoa(this.username + ":" + this.password)); }
 
   getWholeStaff(): Promise<Staff[]> {
       let url = this.staffUrl + '/all';
-      return this.http.get(url)
+      return this.http.get(url, {headers: this.updateHeaders})
                .toPromise()
                .then(response => {
                    return response.json() as Staff[];
@@ -23,10 +27,9 @@ export class StaffService {
                .catch(this.handleError);
   }
 
-
   getPerson(id: number): Promise<Staff> {
     const url = `${this.staffUrl}/id?id=${id}`;
-    return this.http.get(url)
+    return this.http.get(url, {headers: this.updateHeaders})
       .toPromise()
       .then(response => response.json() as Staff)
       .catch(this.handleError);

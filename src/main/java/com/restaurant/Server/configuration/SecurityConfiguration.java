@@ -1,9 +1,10 @@
 package com.restaurant.Server.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -48,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("add/order").hasAuthority("ROLE_STAFF")
                 .antMatchers("/delete/order").hasAuthority("ROLE_STAFF")
                 .antMatchers("/order/staff/**").hasAuthority("ROLE_STAFF")
-                .antMatchers("/get/staff/**").hasAuthority("ROLE_STAFF")
+                .antMatchers("/get/staff/**").hasAnyAuthority("ROLE_STAFF", "ROLE_ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 // .antMatchers("/user/profile").hasRole(Authoritiy.USER.toString())
                 // .antMatchers("/user/**").hasRole(Authoritiy.ADMIN.toString())
@@ -58,4 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(handler);
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
 }

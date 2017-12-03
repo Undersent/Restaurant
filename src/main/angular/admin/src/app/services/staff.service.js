@@ -17,11 +17,15 @@ var StaffService = (function () {
     function StaffService(http) {
         this.http = http;
         this.updateHeaders = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.username = '123';
+        this.password = 'admin';
         this.staffUrl = 'http://localhost:8080/get/staff';
+        this.updateHeaders.append("Authorization", "Basic "
+            + btoa(this.username + ":" + this.password));
     }
     StaffService.prototype.getWholeStaff = function () {
         var url = this.staffUrl + '/all';
-        return this.http.get(url)
+        return this.http.get(url, { headers: this.updateHeaders })
             .toPromise()
             .then(function (response) {
             return response.json();
@@ -30,7 +34,7 @@ var StaffService = (function () {
     };
     StaffService.prototype.getPerson = function (id) {
         var url = this.staffUrl + "/id?id=" + id;
-        return this.http.get(url)
+        return this.http.get(url, { headers: this.updateHeaders })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
